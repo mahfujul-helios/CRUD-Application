@@ -1,0 +1,53 @@
+{% extends "std/base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <h4 class="text-center alert alert-info">Add and Show</h4>
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" class="btn btn-success" value="add">
+            </form>
+        </div>
+
+        <div class="col-sm-7 offset-1">
+             <h4  class="text-center alert alert-info">Students Informations</h4>
+            
+            {% if stu %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for st in stu %}
+                            <tr>
+                                <th scope="row">{{st.id}}</th>
+                                <td>{{st.name}}</td>
+                                <td>{{st.email}}</td>
+                                <td>{{st.password}}</td>
+                                <td>
+                                    <a href="{% url 'updateData' st.id%}" class="btn btn-warning btn-small ">Edit</a>
+                                   <form action="{% url 'deleteData' st.id %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="submit" name="" id="" value="delete" class="btn btn-danger btn-small">
+                                   </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                            
+                    </tbody>
+              </table>
+            {% endif %}
+                
+        </div>
+    </div>
+{% endblock content %}
